@@ -1,0 +1,29 @@
+#Total time over which simulation will be performed 
+resourcesDir                         : ../resources/
+bwaCom                               : bwa
+samtoolsCom                          : samtools
+igvtoolsDir                          : IGVTools/
+#IGV_2.1.24/
+
+################################################################################
+## Input Files
+################################################################################
+
+
+###############################################################
+# Other Props
+###############################################################
+
+###run locally command
+clusterRunCommand                 : bsub -M 30 -q day -C 0 R CMD BATCH --no-save --no-restore  '--args ' processIllumina.R  
+
+readProcessingBlockSize            : 4000000
+maxNumReads                        : 1000#-1    
+turnOffSeq                         : True
+turnOffCigar                       : True
+useProfiler                        : False
+buildConfigs                       : False
+includeMetaData                    : True
+removeQualityMetrics               : True
+
+includedExperiments                : [1068, 1058, 1062, 1064, 1067, 1057, 1061, 1063, 1060] 

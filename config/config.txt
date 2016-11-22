@@ -1,0 +1,118 @@
+#Total time over which simulation will be performed 
+resourcesDir                         : ~/resources/
+bwaCom                               : bwa
+samtoolsCom                          : samtools
+
+################################################################################
+## Input Files
+################################################################################
+
+#root directory containing data
+dataDir                           : ../dataset/
+seqDir                             : seq
+
+tbReferenceGenomeFile             : h37rv/tbdb/mycobacterium_tuberculosis_h37rv_2_supercontigs.fasta
+genomeSummaryFile                 : h37rv/tbdb/mycobacterium_tuberculosis_h37rv_2_genome_summary.txt
+tbAnnotationsFile                 : h37rv/h37rv_refseq.txt
+handAnnotationsFile               : h37rv/derived/handAnnotations.csv
+ellenAnnotationsFile              : h37rv/derived/ellen_metaDataExpProteins.csv
+experimentDataFile                : experimentData.csv
+
+includedExperiments               : [1057, 1058, 1060, 1061, 1062, 1063, 1064, 1068, 1067]  #[-1]
+
+##The experiment processed by processIllumina, unless overriden.. 
+experimentId                      : 1057
+
+pairOrientation:
+    bwa: RF
+    mosaik: FF
+    
+alg: bwa
+    
+bwa:    
+    aln:
+        valued:
+             i: 0        #Disallow an indel within INT bp towards the ends [5]
+             R: 5000     #Proceed with suboptimal alignments if there are no more than INT equally best hits
+             prop_n: 2        #Maximum edit distance if the value is INT, or the fraction of missing alignments given 2% uniform base error rate if FLOAT.
+             o: 1       #
+             #l: 15
+             #k: 3
+        binary: [prop_N]
+    aln2:
+        valued:
+             i: 0        #Disallow an indel within INT bp towards the ends [5]
+             R: 5000     #Proceed with suboptimal alignments if there are no more than INT equally best hits
+             prop_n: 2        #Maximum edit distance if the value is INT, or the fraction of missing alignments given 2% uniform base error rate if FLOAT.
+             o: 1       #
+             #l: 12
+             #k: 3
+        binary: [prop_N]
+    samse:
+        valued:
+            prop_n: 5000
+ 
+##a file specifying the logging configuration. Currently logs everything to root
+pythonLogConfigFile                     : ../config/logging.config
+
+
+################################################################################
+## Output Files
+################################################################################
+
+
+##the root directory for all outputs
+outputDir                         : ../output/
+
+fastaAlignPrefix                  : allignFasta
+trimmedFastaDir                   : /fasta/
+postProcessDir                    : postProcess
+jackpotIndexFile                  : jackpotIndex
+
+##folder realtive to output where log files per blocjk are stored
+clusterLogDir                     : clusterLogs/
+
+############################################################
+# Cluster distribute properties
+###########################################################
+###run on cluster command.
+##clusterRunCommand                 : bsub -M 30 -q day -C 0 R CMD BATCH --no-save --no-restore  '--args ' processIllumina.R  
+
+###run locally command
+clusterRunCommand                 : R CMD BATCH --no-save --no-restore  '--args ' processIllumina.R  
+
+
+######################################################
+buildConfigs                       : False
+readProcessingBlockSize            : 4000000
+blockStart                         : 1
+maxNumReads                        : -1
+turnOffSeq                         : True
+turnOffCigar                       : True
+useProfiler                        : False
+includeMetaData                    : False
+removeReadsWithoutJackpot          : True
+removeQualityMetrics               : True
+fixDists                           : True
+
+maxError:
+    a1:
+        mm: 2
+        insdel: 1
+    a3:
+        mm: 2
+        insdel: 1
+    r1:
+        mm: 2
+        insdel: 1
+    r3:
+        mm: 1
+        insdel: 1
+    r1_r3:
+        mm: 2
+        insdel: 1
+    total:
+        mm: 3
+        insdel: 1
+            
+
