@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="create_run_jar" name="Create Runnable Jar for Project alignmentj with Jar-in-Jar Loader">
+    <!--this file was created by Eclipse Runnable JAR Export Wizard-->
+    <!--ANT 1.7 is required                                        -->
+    <target name="create_run_jar">
+        <jar destfile="/home/doreper/workspace/HOMA/tuberculosis/java/lib/jalign.jar">
+            <manifest>
+                <attribute name="Main-Class" value="org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader"/>
+                <attribute name="Rsrc-Main-Class" value="edu.unc.doreper.Alignment2"/>
+                <attribute name="Class-Path" value="."/>
+                <attribute name="Rsrc-Class-Path" value="./ trove-3.0.3-src.jar trove-3.0.3.jar snakeyaml-1.11.jar picard-1.80.jar sam-1.80.jar log4j-1.2.17.jar"/>
+            </manifest>
+            <zipfileset src="jar-in-jar-loader.zip"/>
+            <fileset dir="/home/doreper/workspace/HOMA/tuberculosis/java/bin"/>
+            <zipfileset dir="/home/doreper/workspace/HOMA/tuberculosis/java/lib" includes="trove-3.0.3-src.jar"/>
+            <zipfileset dir="/home/doreper/workspace/HOMA/tuberculosis/java/lib" includes="trove-3.0.3.jar"/>
+            <zipfileset dir="/home/doreper/workspace/HOMA/tuberculosis/java/lib" includes="snakeyaml-1.11.jar"/>
+            <zipfileset dir="/home/doreper/workspace/HOMA/tuberculosis/java/lib" includes="picard-1.80.jar"/>
+            <zipfileset dir="/home/doreper/workspace/HOMA/tuberculosis/java/lib" includes="sam-1.80.jar"/>
+            <zipfileset dir="/home/doreper/workspace/HOMA/tuberculosis/java/lib" includes="log4j-1.2.17.jar"/>
+        </jar>
+    </target>
+</project>
